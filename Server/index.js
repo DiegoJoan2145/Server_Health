@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cors());
 
 // rutas
-app.use('/server', require('./routes/health'));
+app.use('/login', require('./routes/login'));
 
 app.listen(4000, () => {
     console.log('The server is running');
