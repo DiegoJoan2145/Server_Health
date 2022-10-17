@@ -18,12 +18,12 @@ exports.createUser = async (req, res) => {
                 res.status(400).json({ message : 'Todos los campos son requeridos'});
             }
         
-        //const userEmail = await user.find({ "email" : email }, {email:1});
-        //console.log(userEmail)
+        const userEmail = await user.find({ "email" : email }, {email:1});
+        console.log(userEmail)
         
-        //if (email == userEmail) {
-          //  return res.status(400).json({message: 'Este email ya esta registrado!'});
-        //} else {
+        if (userEmail[0]) {
+           return res.status(400).json({message: 'Este email ya esta registrado!'});
+        } 
         
         let userLogin;
 
