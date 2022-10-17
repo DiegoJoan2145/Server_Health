@@ -15,14 +15,14 @@ exports.createUser = async (req, res) => {
             
             
             if( !(nombre && apellido && nickName && fechaNacimiento && genero && email && password)) {
-                res.status(400).json({ message : 'Todos los campos son requeridos'});
+                res.status(400).json({ message : 'All fields are required'});
             }
         
         const userEmail = await user.find({ "email" : email }, {email:1});
         console.log(userEmail)
         
         if (userEmail[0]) {
-           return res.status(400).json({message: 'Este email ya esta registrado!'});
+           return res.status(400).json({message: 'This email already exist!'});
         } 
         
         let userLogin;
@@ -35,7 +35,7 @@ exports.createUser = async (req, res) => {
         //}
     } catch (error) {
         console.log(error);
-        res.status(500).send('hubo un error');
+        res.status(500).send('There is an error');
     }
 }
 
@@ -50,7 +50,7 @@ exports.login = async (req, res) => {
       * @param {username, password}
       */
      if( !(email && password)) {
-         res.status(400).json({ message : 'username y password son requeridos'});
+         res.status(400).json({ message : 'username and password are required'});
      }
 
      // Finding User by email
@@ -68,7 +68,7 @@ exports.login = async (req, res) => {
         } else {
 
             const emailOk = await user.find( { "email" : email }, {email:1, password:1});            
-            return res.status(200).json({message: 'Usuario encontrado', info: emailOk});
+            return res.status(200).json({message: 'User information', info: emailOk});
         }
     }
 
