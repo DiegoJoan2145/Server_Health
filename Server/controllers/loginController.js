@@ -1,7 +1,7 @@
 const user = require("../models/health");
 const multer = require('multer');
 const upload = multer();
-const bcryptjs = require('bcryptjs');
+const bcryptjs = require('bcrypt');
 
 exports.createUser = async (req, res) => {
     try {
