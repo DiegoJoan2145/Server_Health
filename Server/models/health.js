@@ -20,7 +20,7 @@ const UsuarioSchema = mongoose.Schema({
     },
     password: {
         type: String
-    },
+    }
 
 });
 
