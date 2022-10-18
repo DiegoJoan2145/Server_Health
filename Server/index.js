@@ -24,7 +24,7 @@ app.use(cors());
 
 // rutas
 app.use('/login', require('./routes/Login'));
-//app.use('/user', require('./routes/Login'));
+app.use('/user', require('./routes/User'));
 
 app.listen(4000, () => {
     console.log('The server is running');
