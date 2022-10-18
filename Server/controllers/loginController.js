@@ -94,7 +94,7 @@ exports.login = async (req, res) => {
                         password: 1 
                     });
 
-                return res.status(200).json({ message: 'User information', info: emailOk[0] });
+                return res.status(200).json(emailOk[0]);
             }
         }
 
