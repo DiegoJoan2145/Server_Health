@@ -12,7 +12,7 @@ exports.createUser = async (req, res) => {
                 fechaNacimiento,
                 genero,
                 password
-            } = req.body; //obtenemos datos desde el body
+            } = req.body;
 
         if (!(nombre && apellido && nickName && fechaNacimiento && genero && email && password)) {
             return res.status(400).json({ message: 'Sorry, all fields are required' });

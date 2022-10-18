@@ -23,7 +23,8 @@ app.use(express.json());
 app.use(cors());
 
 // rutas
-app.use('/login', require('./routes/login'));
+app.use('/login', require('./routes/Login'));
+//app.use('/user', require('./routes/Login'));
 
 app.listen(4000, () => {
     console.log('The server is running');
