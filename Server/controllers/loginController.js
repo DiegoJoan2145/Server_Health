@@ -3,7 +3,7 @@ const multer = require('multer');
 const upload = multer();
 const bcryptjs = require('bcrypt');
 
-exports.createUser = async (req, res) => {
+exports.register = async (req, res) => {
     try {
         const { nombre,
                 apellido,

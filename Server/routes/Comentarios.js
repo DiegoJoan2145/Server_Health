@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const loginController = require('../controllers/loginController');
+const commentsController = require('../controllers/commentsController');
 const multer = require('multer');
 const upload = multer();
 
-router.post('/Register',  upload.none(), loginController.register);
-router.post('/',  upload.none(),loginController.login);
+router.post('/CreateComments',  upload.none(), commentsController.createComments);
 //router.put('/:id', loginController.update);
 //router.delete('/:id', loginController.delete);
 
