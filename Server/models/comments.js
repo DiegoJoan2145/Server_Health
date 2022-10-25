@@ -6,6 +6,9 @@ const ComentarioSchema = mongoose.Schema({
     descripcion: {
         type: String
     },
+    respuesta: {
+        type: String
+    },
     idUsuario: {
         type: String
     }

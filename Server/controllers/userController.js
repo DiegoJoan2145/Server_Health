@@ -7,6 +7,7 @@ exports.edit = async (req, res) => {
 
     try {
         const {
+            idUsuario,
             nombre,
             apellido,
             nickName,
@@ -20,14 +21,14 @@ exports.edit = async (req, res) => {
             id
         } = req.params;
 
-        if (!(nombre && apellido && nickName && fechaNacimiento && genero && email && password)) {
+        if (!(idUsuario, nombre && apellido && nickName && fechaNacimiento && genero && email && password)) {
             return res.status(400).json({ message: 'Sorry, all fields are required' });
         }
 
         try {
             await user.find(
                 {
-                    _id: req.params.id
+                    _id: idUsuario
                 });
         }
         catch (e) {
@@ -38,7 +39,7 @@ exports.edit = async (req, res) => {
 
         await user.updateOne(
             { 
-                "_id": id 
+                "_id": idUsuario
             },
             {
                 nombre: nombre,
@@ -61,7 +62,7 @@ exports.edit = async (req, res) => {
         try {
             let userNew = await user.find
                 ({ 
-                    _id: req.params.id 
+                    _id: idUsuario
                 });
 
             return res.status(200).json(userNew[0]);
