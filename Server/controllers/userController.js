@@ -17,10 +17,6 @@ exports.edit = async (req, res) => {
             password
         } = req.body;
 
-        const {
-            id
-        } = req.params;
-
         if (!(idUsuario, nombre && apellido && nickName && fechaNacimiento && genero && email && password)) {
             return res.status(400).json({ message: 'Sorry, all fields are required' });
         }
