@@ -5,25 +5,53 @@ const bcryptjs = require('bcrypt');
 
 exports.createComments = async (req, res) => {
     try {
-        const { titulo,
-                descripcion
-            } = req.body;
-        
         const {
-            id
-        } = req.params;
+               titulo,
+               descripcion,
+               idUsuario
+        } = req.body;
 
-        if (!(titulo && descripcion)) {
+        console.log(req.body)
+
+        if (!(titulo && descripcion && idUsuario)) {
             return res.status(400).json({ message: 'Sorry, all fields are required' });
         }
+
+        
         
         const Comentarios = await comentario.create({
             titulo: titulo,
             descripcion: descripcion,
-            idUsuario: id
+            idUsuario: idUsuario
         });
 
         res.send(Comentarios);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('There is an error with server');
+    }
+}
+
+exports.showComments = async (req, res) => {
+    try {
+
+        const {
+            idUsuario
+        } = req.body;
+
+
+        if (!idUsuario) {
+            return res.status(400).json({ message: 'Sorry, all fields are required' });
+        }
+
+        const user = await comentario.find({
+                    idUsuario: idUsuario
+        })
+
+        console.log(user);
+
+        res.send(user);
 
     } catch (error) {
         console.log(error);

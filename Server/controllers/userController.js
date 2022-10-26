@@ -13,11 +13,10 @@ exports.edit = async (req, res) => {
             nickName,
             email,
             fechaNacimiento,
-            genero,
-            password
+            genero
         } = req.body;
 
-        if (!(idUsuario, nombre && apellido && nickName && fechaNacimiento && genero && email && password)) {
+        if (!(idUsuario, nombre && apellido && nickName && fechaNacimiento && genero && email)) {
             return res.status(400).json({ message: 'Sorry, all fields are required' });
         }
 
@@ -31,8 +30,6 @@ exports.edit = async (req, res) => {
             return res.status(404).json({ message: 'User does not exist' });
         }
 
-        let passwordHash = await bcryptjs.hash(password, 8);
-
         await user.updateOne(
             { 
                 "_id": idUsuario
@@ -43,8 +40,7 @@ exports.edit = async (req, res) => {
                 nickName: nickName,
                 email: email,
                 fechaNacimiento: fechaNacimiento,
-                genero: genero,
-                password: passwordHash
+                genero: genero
             }
         )
             .then((ok) => {
