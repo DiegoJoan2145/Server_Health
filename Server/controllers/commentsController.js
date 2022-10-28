@@ -16,8 +16,6 @@ exports.createComments = async (req, res) => {
         if (!(titulo && descripcion && idUsuario)) {
             return res.status(400).json({ message: 'Sorry, all fields are required' });
         }
-
-        
         
         const Comentarios = await comentario.create({
             titulo: titulo,
@@ -48,8 +46,6 @@ exports.showComments = async (req, res) => {
         const user = await comentario.find({
                     idUsuario: idUsuario
         })
-
-        console.log(user);
 
         res.send(user);
 

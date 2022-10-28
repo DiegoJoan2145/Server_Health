@@ -69,5 +69,22 @@ exports.edit = async (req, res) => {
 }
 
 exports.information = async (req, res) => {
+    try {
 
+        const idUsuario = req.params.id;
+
+        if (!idUsuario) {
+            return res.status(400).json({ message: 'Sorry, all fields are required' });
+        }
+
+        const info = await user.find({
+                    _id: idUsuario
+        })
+
+        res.send(info[0]);
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('There is an error with server');
+    }
 }
