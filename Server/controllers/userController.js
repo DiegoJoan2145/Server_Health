@@ -80,8 +80,7 @@ exports.information = async (req, res) => {
         const info = await user.find({
                     _id: idUsuario
         })
-
-        res.send(info[0]);
+        return res.status(200).json(info[0]);
 
     } catch (error) {
         console.log(error);
