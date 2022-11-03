@@ -14,8 +14,6 @@ exports.createComments = async (req, res) => {
                respuesta
         } = req.body;
 
-        console.log(req.body)
-
         if (!(titulo && descripcion && idUsuario)) {
             return res.status(400).json({ message: 'Sorry, all fields are required' });
         }
@@ -32,23 +30,15 @@ exports.createComments = async (req, res) => {
 
         if(!respuesta){
             let respuesta = 'No hay respuestas';
-            Guardar(
-                titulo,
-                descripcion,
-                respuesta,
-                idUsuario
-            ).then(resp =>{
-                return res.status(200).json(resp);
-            })
+            Guardar(titulo,descripcion,respuesta,idUsuario)
+                .then(resp =>{
+                    return res.status(200).json(resp);
+                });
         } else {
-            Guardar(
-                titulo,
-                descripcion,
-                respuesta,
-                idUsuario
-            ).then(resp =>{
-                return res.status(200).json(resp);
-            })
+            Guardar(titulo,descripcion,respuesta,idUsuario)
+                .then(resp =>{
+                    return res.status(200).json(resp);
+                });
         }
     } catch (error) {
         console.log(error);
