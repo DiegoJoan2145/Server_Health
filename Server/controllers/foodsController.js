@@ -56,11 +56,21 @@ exports.createFoods = async (req, res) => {
 exports.showFoodTable = async (req, res) => {
     try {
 
-        //const {
-          //  idUsuario
-        //} = req.body;
+        const {
+            categoria
+        } = req.body;
 
-        const foods = await food.find({});
+        if(!categoria){
+            return res.status(400).json('categoria fild is required');
+        }
+
+        const foods = await food.find({
+            "categoriaAlimento" : categoria
+        });
+
+        if (foods == 0) {
+            return res.status(200).json('No hay productos a mostrar');
+        }
 
         return res.status(200).json(foods);
         
