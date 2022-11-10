@@ -26,6 +26,7 @@ app.use(cors());
 app.use('/login', require('./routes/Login'));
 app.use('/user', require('./routes/User'));
 app.use('/comments', require('./routes/Comentarios'));
+app.use('/foods', require('./routes/Foods'));
 
 
 app.listen(4000, () => {
