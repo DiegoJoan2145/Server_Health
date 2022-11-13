@@ -5,6 +5,7 @@ const multer = require('multer');
 const upload = multer();
 
 router.post('/ShowComments', upload.none(), commentsController.showComments );
+router.post('/CreateComments', upload.none(), commentsController.createComments );
 //router.put('/:id', loginController.update);
 //router.delete('/:id', loginController.delete);
 
