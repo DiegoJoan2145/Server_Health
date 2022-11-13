@@ -80,3 +80,21 @@ exports.showFoodTable = async (req, res) => {
         return res.status(500).send('There is an error with server');
     }
 }
+
+exports.showFoodAll = async (req, res) => {
+    try {
+
+        const foods = await food.find({});
+
+        if (foods == 0) {
+            return res.status(200).json('No hay productos a mostrar');
+        }
+
+        return res.status(200).json(foods);
+        
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).send('There is an error with server');
+    }
+}
