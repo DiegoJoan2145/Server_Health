@@ -104,3 +104,30 @@ exports.login = async (req, res) => {
         return res.status(500).send('There is an error with server');
     }
 }
+
+exports.forgotPasword = async (req, res) => {
+
+    const {
+        email
+    } = req.body;
+    
+    // Se verifica si se trajo correctamente el email
+    if(!(email)){
+        return res.status(400).json({message: 'Email es requerido'});
+    }
+
+    try {
+
+        let user = await user.find({ "email" : email});
+
+        if (user[0].length <= 0) {
+            return res.status(404).json({ message: "El email ingresado no existe", code: 1 });
+        }
+
+        
+        
+    } catch (error) {
+        
+    }
+
+}
