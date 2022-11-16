@@ -8,7 +8,7 @@ const { find } = require("../models/comments");
 exports.createExercises = async (req, res) => {
     try {
         const {
-               nombreExercise,
+               nombreEjercisio,
                descripcion,
                urlVideo,
                urlImg
@@ -16,12 +16,12 @@ exports.createExercises = async (req, res) => {
 
         console.log(req.body)
 
-        if (!(nombreExercise && descripcion && urlVideo && urlImg)) {
+        if (!(nombreEjercisio && descripcion && urlVideo && urlImg)) {
             return res.status(400).json({ message: 'Sorry, all fields are required' });
         }
 
         const createExer = await exercise.create({
-            nombreExercise : nombreExercise,
+            nombreEjercisio : nombreEjercisio,
             descripcion : descripcion,
             urlVideo : urlVideo,
             urlImg : urlImg
