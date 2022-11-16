@@ -15,6 +15,10 @@ exports.createFoods = async (req, res) => {
                lipidos,
                hidratosCarbono,
                categoriaAlimento,
+               precioAurrera,
+               precioCosto,
+               precioWalmart,
+               precioChedraui,
                urlImg
         } = req.body;
 
@@ -22,7 +26,7 @@ exports.createFoods = async (req, res) => {
             return res.status(400).json({ message: 'Sorry, all fields are required' });
         }
 
-        async function Guardar(nombreAlimento, calorias, proteinas, lipidos, hidratosCarbono, categoriaAlimento, urlImg){
+        async function Guardar(nombreAlimento, calorias, proteinas, lipidos, hidratosCarbono, categoriaAlimento, precioAurrera, precioCosto, precioWalmart, precioChedraui, urlImg){
             const Foods = await food.create({
                 nombreAlimento : nombreAlimento,
                 calorias : calorias,
@@ -30,6 +34,10 @@ exports.createFoods = async (req, res) => {
                 lipidos : lipidos,
                 hidratosCarbono : hidratosCarbono,
                 categoriaAlimento : categoriaAlimento,
+                precioAurrera: precioAurrera,
+                precioCosto: precioCosto,
+                precioWalmart: precioWalmart,
+                precioChedraui: precioChedraui,
                 urlImg : urlImg
             });
             return Foods;
@@ -37,12 +45,12 @@ exports.createFoods = async (req, res) => {
 
         if(!urlImg){
             let urlImg = 'No hay imagen';
-            Guardar(nombreAlimento,calorias,proteinas,lipidos, hidratosCarbono, categoriaAlimento, urlImg)
+            Guardar(nombreAlimento,calorias,proteinas,lipidos, hidratosCarbono, categoriaAlimento, precioAurrera, precioCosto, precioWalmart, precioChedraui, urlImg)
                 .then(resp =>{
                     return res.status(200).json(resp);
                 });
         } else {
-            Guardar(nombreAlimento,calorias,proteinas,lipidos, hidratosCarbono, categoriaAlimento, urlImg)
+            Guardar(nombreAlimento,calorias,proteinas,lipidos, hidratosCarbono, categoriaAlimento, precioAurrera, precioCosto, precioWalmart, precioChedraui, urlImg)
                 .then(resp =>{
                     return res.status(200).json(resp);
                 });

@@ -18,6 +18,18 @@ const FoodSchema = mongoose.Schema({
     categoriaAlimento: {
         type: String
     },
+    precioAurrera: {
+        type: String
+    },
+    precioCosto: {
+        type: String
+    },
+    precioWalmart: {
+        type: String
+    },
+    precioChedraui: {
+        type: String
+    },
     urlImg: {
         type: String
     }
