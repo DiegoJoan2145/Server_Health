@@ -2,6 +2,7 @@
 # dependencies
 /node_modules
 /variables.env
+/config/mailer.js
 
 # profiling files
 chrome-profiler-events*.json

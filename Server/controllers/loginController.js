@@ -2,6 +2,9 @@ const user = require("../models/health");
 const multer = require('multer');
 const upload = multer();
 const bcryptjs = require('bcrypt');
+const transporter = require("../config/mailer");
+const jwt = require("jsonwebtoken");
+const secret = require("../config/secret");
 
 exports.register = async (req, res) => {
     try {
@@ -118,16 +121,103 @@ exports.forgotPasword = async (req, res) => {
 
     try {
 
-        let user = await user.find({ "email" : email});
+        let userfind = await user.find({ "email" : email}).lean();
+        console.log(userfind[0].nombre)
+        const storedUser = userfind[0];
 
-        if (user[0].length <= 0) {
+
+        if (userfind.length <= 0) {
             return res.status(404).json({ message: "El email ingresado no existe", code: 1 });
         }
 
+         // variable que almacenará la ruta para crear la nueva contraseña
+        let verificationLink;
+        // variable que indicará eñ status del email
+        let emailStatus = 'ok'
+
+        //configuración del token
+        const token = jwt.sign({
+        email: storedUser.email,
+        password: storedUser.password
+        },
+        secret.secret.jwtSecret, {expiresIn: '20m'});
+
+        var neww = token.toString();
+
+        //lo enviaremos a través de un correo electrónico
+        verificationLink = "http://localhost:4200/create-new-password/" + token; //lo podemos meter en un .env
+
+        //guardamos el token del usuario en la base de datos
+         const newuser = await user.updateOne(
+            {
+             "_id" : storedUser._id,
+            },
+            {
+             "token" : neww
+            });
+
+         // Configuración Nodemailer para enviar el correo electrónico
+         let info = await transporter.transporter.sendMail({
+             from: '"Health" <healthCompanyRSV@gmail.com>', // sender address
+             to: storedUser.email, // list of receivers
+             subject: `Recuperación de Contraseña`, // Subject line
+             html: `<h3>Hola ${storedUser.nombre} este es un correo con el que podrás recuperar tu contraseña de forma segura<h3/>
+             <br>
+             <b>Por favor, da click en el siguiente enlace:</b>
+             <a href="${verificationLink}">Recuperar contraseña</a>`
+         });
+
+         return res.status(200).json({message: 'Correo electrónico enviado',  info: emailStatus});
         
+        
+    } catch (error) {
+        return res.status(500).json({ message: `${error.message}` });
+    }
+
+}
+
+
+exports.createNewPassword = async (req, res) => {
+    const {
+        newPassword,
+        token
+    } = req.body;
+
+        //validación de los campos requeridos
+    if(!(newPassword && token)){
+      return res.status(400).json({message: "todos los campos son requeridos", code: 1});
+    }
+
+    try {
+
+        const userfind = await user.find({
+            "token" : token
+        });
+        const storedUser = userfind[0];
+
+        if (userfind.length <= 0){
+            return res.status(400).json({message: "No se puede recuperar la contraseña, verifique el enlace enviado a su correo electrónico"});
+        }
+
+        const hashedPassword = await bcryptjs.hash(newPassword, 12);
+
+      //update password
+      const newp = await user.updateOne
+      (
+        {
+            "_id" : storedUser._id
+        },
+        {
+            password : hashedPassword
+        }
+    );
+
+    return res.status(200).json({message: 'La contraseña se ha cambiado'});
         
     } catch (error) {
         
     }
+
+
 
 }

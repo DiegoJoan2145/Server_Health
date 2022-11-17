@@ -10,7 +10,7 @@ const ComentarioSchema = mongoose.Schema({
         type: String
     },
     idUsuario: {
-        type: String
+        type: mongoose.Types.ObjectId
     }
 });
 
