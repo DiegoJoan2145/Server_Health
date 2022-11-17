@@ -30,6 +30,9 @@ const FoodSchema = mongoose.Schema({
     precioChedraui: {
         type: String
     },
+    precioSoriana: {
+        type: String
+    },
     urlImg: {
         type: String
     }

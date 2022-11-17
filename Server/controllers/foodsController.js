@@ -19,6 +19,7 @@ exports.createFoods = async (req, res) => {
                precioCosto,
                precioWalmart,
                precioChedraui,
+               precioSoriana,
                urlImg
         } = req.body;
 
@@ -26,7 +27,7 @@ exports.createFoods = async (req, res) => {
             return res.status(400).json({ message: 'Sorry, all fields are required' });
         }
 
-        async function Guardar(nombreAlimento, calorias, proteinas, lipidos, hidratosCarbono, categoriaAlimento, precioAurrera, precioCosto, precioWalmart, precioChedraui, urlImg){
+        async function Guardar(nombreAlimento, calorias, proteinas, lipidos, hidratosCarbono, categoriaAlimento, precioAurrera, precioCosto, precioWalmart, precioChedraui, precioSoriana, urlImg){
             const Foods = await food.create({
                 nombreAlimento : nombreAlimento,
                 calorias : calorias,
@@ -38,6 +39,7 @@ exports.createFoods = async (req, res) => {
                 precioCosto: precioCosto,
                 precioWalmart: precioWalmart,
                 precioChedraui: precioChedraui,
+                precioSoriana: precioSoriana,
                 urlImg : urlImg
             });
             return Foods;
@@ -45,12 +47,12 @@ exports.createFoods = async (req, res) => {
 
         if(!urlImg){
             let urlImg = 'No hay imagen';
-            Guardar(nombreAlimento,calorias,proteinas,lipidos, hidratosCarbono, categoriaAlimento, precioAurrera, precioCosto, precioWalmart, precioChedraui, urlImg)
+            Guardar(nombreAlimento,calorias,proteinas,lipidos, hidratosCarbono, categoriaAlimento, precioAurrera, precioCosto, precioWalmart, precioChedraui, precioSoriana, urlImg)
                 .then(resp =>{
                     return res.status(200).json(resp);
                 });
         } else {
-            Guardar(nombreAlimento,calorias,proteinas,lipidos, hidratosCarbono, categoriaAlimento, precioAurrera, precioCosto, precioWalmart, precioChedraui, urlImg)
+            Guardar(nombreAlimento,calorias,proteinas,lipidos, hidratosCarbono, categoriaAlimento, precioAurrera, precioCosto, precioWalmart, precioChedraui, precioSoriana, urlImg)
                 .then(resp =>{
                     return res.status(200).json(resp);
                 });
