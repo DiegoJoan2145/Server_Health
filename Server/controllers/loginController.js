@@ -146,7 +146,7 @@ exports.forgotPasword = async (req, res) => {
 
         //lo enviaremos a través de un correo electrónico
         verificationLink = "http://localhost:4200/create-new-password/" + token; //lo podemos meter en un .env
-
+          
         //guardamos el token del usuario en la base de datos
          const newuser = await user.updateOne(
             {
@@ -212,7 +212,7 @@ exports.createNewPassword = async (req, res) => {
         }
     );
 
-    return res.status(200).json({message: 'La contraseña se ha cambiado'});
+    return res.status(200).json({message: 'La contraseña se ha cambiado con éxito'});
         
     } catch (error) {
         
