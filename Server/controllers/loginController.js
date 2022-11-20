@@ -121,8 +121,12 @@ exports.forgotPasword = async (req, res) => {
 
     try {
 
-        let userfind = await user.find({ "email" : email}).lean();
-        console.log(userfind[0].nombre)
+        let userfind = await user.find(
+            { 
+                "email" : email
+            }
+            ).lean();
+            
         const storedUser = userfind[0];
 
 
@@ -130,9 +134,7 @@ exports.forgotPasword = async (req, res) => {
             return res.status(404).json({ message: "El email ingresado no existe", code: 1 });
         }
 
-         // variable que almacenará la ruta para crear la nueva contraseña
         let verificationLink;
-        // variable que indicará eñ status del email
         let emailStatus = 'ok'
 
         //configuración del token
@@ -145,7 +147,7 @@ exports.forgotPasword = async (req, res) => {
         var neww = token.toString();
 
         //lo enviaremos a través de un correo electrónico
-        verificationLink = "http://localhost:4200/create-new-password/" + token; //lo podemos meter en un .env
+        verificationLink = token; 
           
         //guardamos el token del usuario en la base de datos
          const newuser = await user.updateOne(
@@ -163,8 +165,8 @@ exports.forgotPasword = async (req, res) => {
              subject: `Recuperación de Contraseña`, // Subject line
              html: `<h3>Hola ${storedUser.nombre} este es un correo con el que podrás recuperar tu contraseña de forma segura<h3/>
              <br>
-             <b>Por favor, da click en el siguiente enlace:</b>
-             <a href="${verificationLink}">Recuperar contraseña</a>`
+             <b>A continuación, te proporcionamos tu código de verificación:</b>
+             <h4>${verificationLink}</h4>`
          });
 
          return res.status(200).json({message: 'Correo electrónico enviado',  info: emailStatus});
@@ -178,15 +180,18 @@ exports.forgotPasword = async (req, res) => {
 
 
 exports.createNewPassword = async (req, res) => {
+
     const {
         newPassword,
         token
-    } = req.body;
+    } = await req.body;
 
         //validación de los campos requeridos
     if(!(newPassword && token)){
       return res.status(400).json({message: "todos los campos son requeridos", code: 1});
     }
+
+    console.log(token)
 
     try {
 
@@ -194,6 +199,7 @@ exports.createNewPassword = async (req, res) => {
             "token" : token
         });
         const storedUser = userfind[0];
+        console.log(userfind)
 
         if (userfind.length <= 0){
             return res.status(400).json({message: "No se puede recuperar la contraseña, verifique el enlace enviado a su correo electrónico"});
